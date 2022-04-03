@@ -1,0 +1,20 @@
+int a;
+int b;
+int min;
+float c;
+
+a = 15;
+b = 11;
+
+if(a >= b)
+min = b;
+else
+min = a; 
+
+while(a>b)
+b = b +1;
+
+if(a <> b)
+c = 1;
+
+c = b*(a-min);
