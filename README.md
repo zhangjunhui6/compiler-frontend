@@ -1,5 +1,7 @@
 # Compiler Frontend
 
+## Introduction
+
 A simple C-like compiler front-end, which can compile the source program into three address intermediate code.
 
 The project is implemented with C++ language, including lexical scanner, LR syntax parser, semantic analysis and intermediate code generation.
@@ -17,3 +19,8 @@ git clone https://github.com/Zjh2105618521/compiler-frontend
 ## Usage
 
 Open and run with visual studio 2019 / 2022 on Windows system
+
+
+## Demo
+
+![](https://user-images.githubusercontent.com/51067659/163772609-ad393f39-3505-45f6-9863-2622e66af42a.png)
