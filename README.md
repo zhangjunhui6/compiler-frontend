@@ -11,7 +11,7 @@ The project is implemented with C++ language, including lexical scanner, LR synt
 ## Install
 
 ```
-git clone https://github.com/Zjh2105618521/compiler-frontend
+git clone https://github.com/zhangjunhui6/compiler-frontend
 ```
 
 ## Usage
