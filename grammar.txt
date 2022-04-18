@@ -1,0 +1,67 @@
+A→ P
+P → XDS
+X →ε{offset=0;}     
+D →L id ; YD 
+Y →ε{top.put(id.lexname,L.t,offset); 
+Offset = offset+L.w }  
+D →ε 
+L → BKZ{L.t=Z.t;L.w=Z.w}    
+B → int {B.t = integer;B.w = 4}   
+B → float {B.t = float; B.w = 8}
+K →ε{t=B.t;w=B.w}      
+Z →ε{Z.t=t;Z.w=w}		 
+S → id = E;     {gen(top.get(id.lexeme) ‘=’ E.addr)}   
+S → if （C） M S1 	
+{
+backpatch(C.truelist,M.instr);
+S.nextlist=merge(C.falselist, S1.nextlist)
+}
+S → if （C）M1 S1N else M2 S2 
+{
+backpatch(C.truelist, M1.instr);
+backpatch(C.falselist, M2.instr);
+S.nextlist=merge(S2.nextlist,merge(N.nextlist, S1.nextlist)
+}
+S → while M1（C） M2 S1  
+{
+backpatch(S1.nextlist, M1.instr);
+backpatch(C.truelist, M2.instr);
+S.nextlist=C.falselist;
+Gen(‘goto’ M1.instr)
+}
+S → S1M S2  
+{
+backpatch(S1.nextlist,M.instr);
+S.nextlist= S2.nextlist
+}
+M → ε	{M.instr = nextinstr}   
+N → ε	{N.nextlist = makelist(nextinstr);
+Gen(‘goto -’)}
+C → E1 > E2	      {C.truelist = makelist(nextinstr);  
+C.falselist = makelist(nextinstar + 1)
+Gen(‘if’ E1.addr ‘>’ E2.addr ‘goto -’)
+Gen(‘goto -’}
+C → E1 < E2           {C.truelist = makelist(nextinstr);
+C.falselist = makelist(nextinstar + 1)
+Gen(‘if’ E1.addr ‘<’ E2.addr ‘goto -’)
+Gen(‘goto -’}
+C → E1 == E2          {C.truelist = makelist(nextinstr);
+C.falselist = makelist(nextinstar + 1)
+Gen(‘if’ E1.addr ‘==’ E2.addr ‘goto -’)
+Gen(‘goto -’}
+C → E1 >= E2  
+C → E1 <= E2
+C → E1 <> E2  
+E → E1 + T    {E.addr = new Temp();
+Gen(E.addr ‘=’ E1.addr + T.addr)}     
+E → E1 – T 		{E.addr = new Temp();
+Gen(E.addr ‘=’ E1.addr - T.addr)}
+E → T 			{E.addr = T.addr}    
+T → F 			{T.addr = F.addr}     
+T → T1 * F 		{T.addr = new Temp();
+Gen(T.addr = T1.addr ‘*’ F.addr)}
+T → T1 / F 		{T.addr = new Temp();
+Gen(T.addr = T1.addr ‘/’ F.addr)}	
+F → ( E )			  {F.addr = E.addr} 
+F → id 			 {F.addr = top.get(id.lexeme)}      
+F → num		     {F.addr = top.get(num.lexeme)} 
