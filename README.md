@@ -1,7 +1,5 @@
 # Compiler Frontend
 
-## Introduction
-
 A simple C-like compiler front-end, which can compile the source program into three address intermediate code.
 
 The project is implemented with C++ language, including lexical scanner, LR syntax parser, semantic analysis and intermediate code generation.
